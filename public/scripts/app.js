@@ -29,8 +29,15 @@ const render_listings = function() {
 
 const create_listing_handler = function(event) {
   event.preventDefault();
-  const formData = $(this).serializeArray();
-  console.log(formData)
+  const formData = {}
+
+  $(this).serializeArray().forEach(obj => {
+    formData[obj.name] = obj.value;
+  });
+
+  $.post("/api/listings", formData, () => {
+    console.log('sent it')
+  })
 }
 
 $(document).ready(function() {
