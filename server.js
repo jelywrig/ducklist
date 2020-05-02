@@ -2,13 +2,14 @@
 require('dotenv').config();
 
 // Web server config
-const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
-const express    = require("express");
-const bodyParser = require("body-parser");
-const sass       = require("node-sass-middleware");
-const app        = express();
-const morgan     = require('morgan');
+const PORT          = process.env.PORT || 8080;
+const ENV           = process.env.ENV || "development";
+const express       = require("express");
+const bodyParser    = require("body-parser");
+const sass          = require("node-sass-middleware");
+const app           = express();
+const morgan        = require('morgan');
+const cookieSession = require('cookie-session')
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -29,6 +30,11 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['midterm'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
