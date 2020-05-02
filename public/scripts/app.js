@@ -5,7 +5,7 @@ const escape = function(string){
   return p.innerHTML;
 }
 
-const render_listing = function(listing) {
+const build_listing = function(listing) {
   return `
     <div class="card mt-4" style="width: 20rem;">
       <img src="${escape(listing.thumbnail_image_url)}" class="card-img-top">
@@ -22,11 +22,18 @@ const render_listings = function() {
   const container = $("#listings_container");
   $.get("/api/listings", data => {
     container.empty();
-    const listings = data.listings.map(render_listing);
-    container.append(...listings)
+    const listings = data.listings.map(build_listing);
+    container.append(...listings);
   })
 }
 
+const create_listing_handler = function(event) {
+  event.preventDefault();
+  const formData = $(this).serializeArray();
+  console.log(formData)
+}
+
 $(document).ready(function() {
-  render_listings()
+  render_listings();
+  $('#create-listing-form').submit(create_listing_handler);
 })
