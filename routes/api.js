@@ -16,18 +16,19 @@ module.exports = (db) => {
   // });
 
   router.get("/listings", (req, res) => {
-    db.query("SELECT * FROM items")
+    db.query("SELECT * FROM items ORDER BY posted_at DESC;")
       .then(data => {
         const listings = data.rows;
         res.json({ listings })
       })
   })
 
+  // TODO: Refine query
   router.get("/messages/summaries", (req, res) => {
     db.query(`
       SELECT *
       FROM messages
-      WHERE $1 IN (from_user, to_user)
+      WHERE $1 IN (from_user, to_user);
     `, [5])
       .then(data => {
         const messages = data.rows;
@@ -41,6 +42,7 @@ module.exports = (db) => {
       FROM messages
       WHERE re_item = $1
         AND $2 IN (from_user, to_user)
+      ORDER BY sent_at;
     `, [req.params.item_id, req.params.user_id])
       .then(data => {
         const messages = data.rows
