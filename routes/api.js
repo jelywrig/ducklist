@@ -21,5 +21,17 @@ module.exports = (db) => {
         res.json({ listings })
       })
   })
+
+  router.get("/messages/summaries", (req, res) => {
+    db.query(`
+      SELECT * FROM messages
+      WHERE $1 IN (from_user, to_user)
+    `, [5])
+      .then(data => {
+        const messages = data.rows;
+        res.json({ messages })
+      })
+  })
+
   return router;
 };
