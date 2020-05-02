@@ -15,8 +15,42 @@ module.exports = (db) => {
   //     });
   // });
 
+
+  // ?from_price=xxxx&to_price=xxxx&favourites=false
   router.get("/listings", (req, res) => {
-    db.query("SELECT * FROM items ORDER BY posted_at DESC;")
+    const {from_price, to_price, favourites } = req.query;
+    const user_id = req.session.user_id;
+    const queryParams = [];
+    let query = "SELECT * FROM items"
+    if(favourites) {
+      queryParams.push(user_id);
+      query += ` JOIN favourite_items on items.id = item_id WHERE user_id = $${queryParams.length}`
+      if(from_price){
+        queryParams.push(from_price);
+        query += ` AND price_in_cents >= $${queryParams.length}`;
+      }
+      if(to_price){
+        queryParams.push(to_price);
+        query += ` AND price_in_cents <= $${queryParams.length}`;
+      }
+    } else if (from_price || to_price) {
+      query += " WHERE "
+      if(from_price){
+        queryParams.push(from_price);
+        query += `price_in_cents >= $${queryParams.length}`;
+        if(to_price){
+          queryParams.push(to_price);
+          query += ` AND price_in_cents <= $${queryParams.length}`;
+        }
+      } else {
+        queryParams.push(to_price);
+        query += ` price_in_cents <= $${queryParams.length}`;
+      }
+    }
+
+    query += " ORDER BY posted_at DESC;"
+
+    db.query(query, queryParams)
       .then(data => {
         const listings = data.rows;
         res.json({ listings })
@@ -26,9 +60,13 @@ module.exports = (db) => {
   // TODO: Refine query
   router.get("/messages/summaries", (req, res) => {
     db.query(`
-      SELECT *
-      FROM messages
-      WHERE $1 IN (from_user, to_user);
+      SELECT m1.*
+      FROM messages AS m1
+      LEFT OUTER JOIN messages AS m2
+      ON m1.id = m2.id                                                                <----- here needs help
+          AND((m1.sent_at < m2.sent_at
+            OR (m1.sent_at = m2.sent_at AND m1.id< m2.id)))
+      WHERE $1 IN (m1.from_user, m1.to_user);
     `, [5])
       .then(data => {
         const messages = data.rows;
