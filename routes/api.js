@@ -19,9 +19,9 @@ module.exports = (db) => {
 
 
 
-  // ?from_price=xxxx&to_price=xxxx&favourites=false
+  // ?from_price=xxxx&to_price=xxxx&favourites=false&my_postings=true
   router.get("/listings", (req, res) => {
-    const {from_price, to_price, favourites, my_postings} = req.query;
+    const {from_price, to_price, favourites, my_listings} = req.query;
     const user_id = req.session.user_id;
     const queryParams = [];
     queryParams.push(user_id ? user_id : 0);
@@ -40,8 +40,8 @@ module.exports = (db) => {
       queryParams.push(to_price);
       whereClause += ` AND price_in_cents <= $${queryParams.length}`;
     }
-    if(my_postings === 'true') {
-      queryParams.push(user_id);
+    if(my_listings === 'true') {
+      queryParams.push(user_id ? user_id : 0);
       whereClause += ` AND owner_id = $${queryParams.length}`;
     }
     query += whereClause;
@@ -62,7 +62,7 @@ module.exports = (db) => {
     db.query("INSERT INTO items (owner_id, title, description, thumbnail_image_url, price_in_cents) VALUES ($1,$2,$3,$4,$5) RETURNING * ", queryParams)
     .then(data => {
       res.json(data.rows[0]);
-;    });
+    });
 
   });
 
