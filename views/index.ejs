@@ -12,6 +12,7 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/filter_slidedown.js"></script>
   </head>
 
   <body>
@@ -28,7 +29,7 @@
             <a class="nav-link" href="#" data-toggle="modal" data-target="#createListingModal">Create Listing</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Filter</a>
+            <a class="nav-link" id="filter" href="#">Filter</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Messages</a>
@@ -38,6 +39,17 @@
         </ul>
       </div>
     </nav>
+    <div id="filter_slidedown">
+      <form class="form-inline">
+        <label for="from_price">Min. Price</label>
+        <input type="number" class="form-control m-2" id="from_price">
+        <label for="to_price">Max Price</label>
+        <input type="number" class="form-control m-2" id="to_price">
+        <input class="form-check-input m-2" type="checkbox" value="" id="favourites">
+        <label class="form-check-label" for="favourites">Favourties only</label>
+        <button type="submit" class="btn btn-primary m-2">Filter</button>
+      </form>
+    </div>
 
     <div id="listings_container" class="container"></div>
 
