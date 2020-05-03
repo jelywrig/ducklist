@@ -89,5 +89,32 @@ module.exports = (db) => {
       })
   })
 
+  // body: {
+  //   favourite: `Bool`
+  //   unfavourite: `Bool`
+  //   inactive: `Bool`
+  //   sold: `Bool`
+  // }
+  router.post("/listings/:id", (req, res) => {
+    const userId = req.session.user_id;
+    const { unfavourite, favourite } = req.body;
+    if (userId) {
+      if (favourite === 'true') {
+        db.query(`
+          INSERT INTO favourite_items (user_id, item_id)
+          VALUES ($1, $2)
+        `, [userId, req.params.id])
+          .then(data => res.json({ success: true }))
+      } else if (unfavourite === 'true') {
+        db.query(`
+          DELETE FROM favourite_items
+          WHERE user_id = $1
+            AND item_id = $2
+        `, [userId, req.params.id])
+          .then(data => res.json({ success: true }))
+      }
+    }
+  })
+
   return router;
 };
