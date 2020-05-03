@@ -12,7 +12,7 @@ const render_filtered_listings = function() {
     },
     success: function(data) {
       container.empty();
-      const listings = data.listings.map(render_listing);
+      const listings = data.listings.map(build_listing);
       container.append(...listings);
     }
   })
