@@ -59,16 +59,18 @@ module.exports = (db) => {
   })
 
   // TODO: Refine query
+
+
   router.get("/messages/summaries", (req, res) => {
     db.query(`
-      SELECT m1.*
-      FROM messages AS m1
-      LEFT OUTER JOIN messages AS m2
-      ON m1.id = m2.id                                                                <----- here needs help
-          AND((m1.sent_at < m2.sent_at
-            OR (m1.sent_at = m2.sent_at AND m1.id< m2.id)))
-      WHERE $1 IN (m1.from_user, m1.to_user);
-    `, [5])
+    Select i.title, messages.id, u1.first_name as from_user, u2.first_name as to_user, content, sent_at
+    FROM messages
+    JOIN users u1 on from_user = u1.id
+    JOIN users u2 on to_user = u2.id
+    JOIN items i on re_item = i.id
+    WHERE u1.id = $1 OR u2.id = $1
+    ORDER BY sent_at DESC;
+    `, [req.session.user_id])
       .then(data => {
         const messages = data.rows;
         res.json({ messages })
