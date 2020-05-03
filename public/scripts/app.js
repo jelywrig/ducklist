@@ -6,6 +6,7 @@ const escape = function(string){
 }
 
 const build_listing = function(listing) {
+  console.log(listing)
   return $(`
     <div class="card mt-4" style="width: 20rem;">
       <img src="${escape(listing.thumbnail_image_url)}" class="card-img-top">
