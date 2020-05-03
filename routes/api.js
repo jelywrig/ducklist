@@ -113,21 +113,40 @@ module.exports = (db) => {
   //   sold: `Bool`
   // }
   router.post("/listings/:id", (req, res) => {
+    const itemId = req.params.id
     const userId = req.session.user_id;
-    const { unfavourite, favourite } = req.body;
+    const { unfavourite, favourite, sold, inactive } = req.body;
     if (userId) {
       if (favourite === 'true') {
         db.query(`
           INSERT INTO favourite_items (user_id, item_id)
           VALUES ($1, $2)
-        `, [userId, req.params.id])
+        `, [userId, itemId])
           .then(data => res.json({ success: true }))
       } else if (unfavourite === 'true') {
         db.query(`
           DELETE FROM favourite_items
           WHERE user_id = $1
             AND item_id = $2
-        `, [userId, req.params.id])
+        `, [userId, itemId])
+          .then(data => res.json({ success: true }))
+      }
+
+      if (sold === 'true') {
+        db.query(`
+          UPDATE items
+          SET sold_at = NOW()
+          WHERE id = $1
+        `, [itemId])
+          .then(data => res.json({ success: true }))
+      }
+
+      if (inactive === 'true') {
+        db.query(`
+          UPDATE items
+          SET deactivated_at = NOW()
+          WHERE id = $1
+        `, [itemId])
           .then(data => res.json({ success: true }))
       }
     }
