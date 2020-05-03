@@ -17,7 +17,7 @@
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Ducklist</a>
+      <a class="navbar-brand" href="/">Ducklist</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,7 +25,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Create Listing<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#createListingModal">Create Listing</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Filter</a>
@@ -36,11 +36,51 @@
             <a class="nav-link" href="#">Log out</a>
           </li>
         </ul>
-
       </div>
     </nav>
 
     <div id="listings_container" class="container"></div>
+
+    <!-- Create Listing Modal -->
+    <div class="modal fade" id="createListingModal" tabindex="-1" role="dialog" aria-labelledby="createListingModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createListingModalTitle">Create Listing</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <!-- Modal Form Content -->
+            <form id="create-listing-form">
+              <div class="form-group">
+                <label for="title-input">Title</label>
+                <input type="text" name="title" class="form-control" id="title-input" aria-describedby="title-input" placeholder="Enter title">
+              </div>
+              <div class="form-group">
+                <label for="description-input">Description</label>
+                <textarea name="description" class="form-control" id="description-input" placeholder="Enter description" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="image-input">Image URL</label>
+                <input type="url" name="image_url" class="form-control" id="image-input" placeholder="Enter image url">
+              </div>
+              <div class="form-group">
+                <label for="price-input">Price</label>
+                <input type="number" name="price" class="form-control" id="price-input" placeholder="Enter price">
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="create-listing-form">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--- for bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
