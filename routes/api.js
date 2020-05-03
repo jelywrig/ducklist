@@ -22,23 +22,23 @@ module.exports = (db) => {
     const user_id = req.session.user_id;
     const queryParams = [];
     let query = "SELECT * FROM items"
-    if(favourites) {
+    if(favourites === 'true') {
       queryParams.push(user_id);
       query += ` JOIN favourite_items on items.id = item_id WHERE user_id = $${queryParams.length}`
-      if(from_price){
+      if(Number(from_price)){
         queryParams.push(from_price);
         query += ` AND price_in_cents >= $${queryParams.length}`;
       }
-      if(to_price){
+      if(Number(to_price)){
         queryParams.push(to_price);
         query += ` AND price_in_cents <= $${queryParams.length}`;
       }
-    } else if (from_price || to_price) {
+    } else if (Number(from_price) || Number(to_price)) {
       query += " WHERE "
-      if(from_price){
+      if(Number(from_price)){
         queryParams.push(from_price);
         query += `price_in_cents >= $${queryParams.length}`;
-        if(to_price){
+        if(Number(to_price)){
           queryParams.push(to_price);
           query += ` AND price_in_cents <= $${queryParams.length}`;
         }
