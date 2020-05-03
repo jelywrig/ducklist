@@ -54,11 +54,25 @@ app.use("/api", apiRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+  const templateVars = {
+    user: req.session.user_id,
+    is_admin: req.session.is_admin
+  };
+  res.render("index", templateVars);
 });
 
 app.get('/login/:id', (req, res) => {
   req.session.user_id = req.params.id;
+  db.query('SELECT is_admin FROM users WHERE id = $1', [req.params.id]).then(function (data) {
+    req.session.is_admin = data.rows[0].is_admin;
+    res.redirect('/');
+  });
+
+});
+
+app.get('/logout', (req,res) => {
+  req.session.user_id = undefined;
+  req.session.is_admin = undefined;
   res.redirect('/');
 });
 
