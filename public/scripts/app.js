@@ -5,9 +5,6 @@ const escape = function(string){
   return p.innerHTML;
 }
 
-
-// <i class="material-icons">${listing.favourite ? 'favorite' : 'favorite_border'}</i>
-// <form onsubmit="favoriteHandler(${listing.id}, ${listing.favourite})">
 const build_listing = function(listing) {
   return $(`
     <div class="card mt-4" style="width: 20rem;">
