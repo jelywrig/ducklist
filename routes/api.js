@@ -21,7 +21,8 @@ module.exports = (db) => {
     const {from_price, to_price, favourites } = req.query;
     const user_id = req.session.user_id;
     const queryParams = [];
-    let query = "SELECT * FROM items"
+    queryParams.push(user_id ? user_id : 0);
+    let query = `SELECT *, EXISTS(SELECT TRUE From favourite_items WHERE user_id=$${queryParams.length} AND item_id= items.id) as favourite FROM items`
     if(favourites === 'true') {
       queryParams.push(user_id);
       query += ` JOIN favourite_items on items.id = item_id WHERE user_id = $${queryParams.length}`
