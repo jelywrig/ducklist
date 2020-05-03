@@ -47,7 +47,9 @@ const create_listing_handler = function(event) {
   });
 
   $.post("/api/listings", formData, () => {
-    console.log('sent it')
+    $('#createListingModal').modal('toggle');
+    render_listings();
+
   })
 }
 
