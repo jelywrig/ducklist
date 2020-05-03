@@ -5,6 +5,17 @@ const escape = function(string){
   return p.innerHTML;
 }
 
+const build_listing_footer = function({ owner_id, user_id }) {
+  if (owner_id === user_id) {
+    return `
+      <a href="#" class="btn btn-success">Sold</a>
+      <a href="#" class="btn btn-danger">Delete</a>
+    `
+  } else {
+    return `<a href="#" class="btn btn-primary">Contact</a>`
+  }
+}
+
 const build_listing = function(listing) {
   console.log(listing)
   return $(`
@@ -13,7 +24,7 @@ const build_listing = function(listing) {
       <div class="card-body">
         <h5 class="card-title">${escape(listing.title)}</h5>  <span>$${escape((listing.price_in_cents / 100).toFixed(2))}</span>
         <p class="card-text">${escape(listing.description)}</p>
-        <a href="#" class="btn btn-primary">Contact</a>
+        ${build_listing_footer(listing)}
         <span class="align-middle float-right">
 
           <form data-listing_id="${listing.id}" data-is_favorite="${listing.favourite}">
