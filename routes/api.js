@@ -83,8 +83,9 @@ module.exports = (db) => {
       FROM messages
       WHERE re_item = $1
         AND $2 IN (from_user, to_user)
+        AND $3 IN (from_user, to_user)
       ORDER BY sent_at;
-    `, [req.params.item_id, req.params.user_id])
+    `, [req.params.item_id, req.params.user_id, req.session.user_id])
       .then(data => {
         const messages = data.rows
         res.json({ messages })
