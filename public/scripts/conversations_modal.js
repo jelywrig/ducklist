@@ -1,3 +1,26 @@
+
+const buildConversation = function({ title }) {
+  const $conversation = $(`
+    <a href="#" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">${title}</h5>
+        <small>3 days ago</small>\
+      </div>
+      <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+      <small>Donec id elit non mi porta.</small>
+    </a>
+  `);
+  return $conversation;
+}
+
+const buildModalBody = function() {
+  return new Promise((resolve, reject) => {
+    $.get("/api/messages/summaries", data => {
+      resolve(data.messages.map(buildConversation))
+    })
+  })
+}
+
 const buildModal = function() {
   const $modal = $(`
     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -9,7 +32,7 @@ const buildModal = function() {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body list-group">
 
           </div>
           <div class="modal-footer">
@@ -24,6 +47,16 @@ const buildModal = function() {
 }
 
 const openConversationsModal = function(event) {
-  event.preventDefault()
-  $('#conversations-modal-container').html(buildModal())
+  event.preventDefault();
+  buildModalBody()
+    .then(conversations => {
+      const $modal = buildModal();
+      $modalBody = $modal.find('.modal-body');
+      $modalBody.append(...conversations)
+      $('#conversations-modal-container').html($modal);
+    })
+  // const $modal = buildModal();
+  // $modalBody = $modal.find('.modal-body');
+  // $modalBody.append(...buildModalBody())
+  // $('#conversations-modal-container').html($modal);
 }
