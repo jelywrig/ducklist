@@ -4,8 +4,6 @@
 const displayConversationModal = function (other_user_id, item_id) {
 
   $.get(`/api/messages/by_item_and_user/${escape(item_id)}/${escape(other_user_id)}`, data => {
-
-    alert(JSON.stringify(data));
     const $modal = createConversationModal(data);
     $('#conversation-modal-container').append($modal);
     $modal.modal('toggle');
@@ -13,8 +11,10 @@ const displayConversationModal = function (other_user_id, item_id) {
 }
 
 const createConversationModal = function (data) {
-  const item_title = data.messages[0].item_title;
   const messages = data.messages;
+  const item_title = messages[0].item_title;
+  const other_user = messages[0].other_user_id;
+  const item_id = messages[0].item_id;
   const $modal = $(`
 <div class="modal fade" id="conversationModal" tabindex="-1" role="dialog" aria-labelledby="conversationModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -40,7 +40,7 @@ const createConversationModal = function (data) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" form="create-listing-form">Send</button>
+        <button type="submit" class="btn btn-primary" id="reply-btn" form="reply-message-form">Send</button>
       </div>
     </div>
   </div>
@@ -54,6 +54,14 @@ const createConversationModal = function (data) {
     </div>
     `));
   }
+
+  $modal.find('#reply-btn').click(event => {
+    event.preventDefault();
+    alert("in click handler");
+    const content = $("#reply-input").val();
+    formData = {to_user: other_user, content, item_id};
+    $.post('/api/messages', formData, () => $modal.modal('toggle'));
+  });
 
 
   return $modal;
