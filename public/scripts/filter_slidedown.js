@@ -8,7 +8,8 @@ const render_filtered_listings = function() {
     data:{
       from_price: $('#from_price').val() * 100,
       to_price: $('#to_price').val() * 100,
-      favourites: $( "#favourites" ).is(":checked")
+      favourites: $( "#favourites" ).is(":checked"),
+      my_listings: $("#my_listings").is(":checked")
     },
     success: function(data) {
       container.empty();

@@ -50,7 +50,11 @@
         <label for="to_price">Max Price</label>
         <input type="number" class="form-control m-2" id="to_price">
         <input class="form-check-input m-2" type="checkbox" value="" id="favourites">
-        <label class="form-check-label" for="favourites">Favourties only</label>
+        <label class="form-check-label" for="favourites">Favourties</label>
+        <% if(is_admin) { %>
+          <input class="form-check-input m-2" type="checkbox" value="" id="my_listings">
+          <label class="form-check-label" for="my_listings">My listings</label>
+        <% } %>
         <button type="submit" class="btn btn-primary m-2">Filter</button>
       </form>
     </div>
