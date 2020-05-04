@@ -27,7 +27,7 @@ const build_listing = function(listing) {
         <span class="align-middle float-right">
 
           <form data-listing_id="${listing.id}" data-is_favorite="${listing.favourite}">
-            <input class="material-icons" type="submit" value="${listing.favourite ? 'favorite' : 'favorite_border'}" style="border: none;">
+            <input class="material-icons" type="submit" value="${listing.favourite ? 'favorite' : 'favorite_border'}" style="border: none; background-color: transparent;">
           </form>
 
         </span>
