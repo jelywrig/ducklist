@@ -74,7 +74,7 @@ module.exports = (db) => {
     db.query(`
 
       Select DISTINCT ON ((CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item) i.title,
-      messages.id, u1.first_name as from_user, u2.first_name as to_user, content, sent_at
+      messages.id, u1.first_name as from_user, u2.first_name as to_user, content, sent_at, re_item, (CASE WHEN from_user = $1 THEN to_user ELSE from_user END) as other_user
       FROM messages
       JOIN users u1 on from_user = u1.id
       JOIN users u2 on to_user = u2.id
