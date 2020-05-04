@@ -45,10 +45,9 @@
     </nav>
 
     <div id="filter_slidedown">
-      <!-- <form class="form-inline justify-content-center"> -->
       <form>
         <div class="form-row justify-content-center">
-          <div class="form-group m-2">
+          <div class="form-group m-2" style="flex-grow: 1;">
             <label for="from_price">Min Price</label>
             <div class="input-group">
               <div class="input-group-prepend">
@@ -58,7 +57,7 @@
             </div>
           </div>
 
-          <div class="form-group m-2">
+          <div class="form-group m-2" style="flex-grow: 1;">
             <label for="validationCustom01">Max Price</label>
             <div class="input-group">
               <div class="input-group-prepend">
@@ -86,17 +85,6 @@
           <% } %>
           <button type="submit" class="btn btn-primary m-2">Filter</button>
         </div>
-        <!-- <label for="from_price">Min. Price</label>
-        <input type="number" class="form-control m-2" id="from_price">
-        <label for="to_price">Max Price</label>
-        <input type="number" class="form-control m-2" id="to_price">
-        <input class="form-check-input m-2" type="checkbox" value="" id="favourites">
-        <label class="form-check-label" for="favourites">Favourties</label>
-        <% if(is_admin) { %>
-          <input class="form-check-input m-2" type="checkbox" value="" id="my_listings">
-          <label class="form-check-label" for="my_listings">My listings</label>
-        <% } %>
-        <button type="submit" class="btn btn-primary m-2">Filter</button> -->
       </form>
     </div>
 
