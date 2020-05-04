@@ -57,7 +57,6 @@ const createConversationModal = function (data) {
 
   $modal.find('#reply-btn').click(event => {
     event.preventDefault();
-    alert("in click handler");
     const content = $("#reply-input").val();
     formData = {to_user: other_user, content, item_id};
     $.post('/api/messages', formData, () => $modal.modal('toggle'));
