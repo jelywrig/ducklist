@@ -19,8 +19,10 @@ const build_listing_buttons = function({ owner_id, user_id, sold_at }) {
 const build_listing = function(listing) {
   const $listing = $(`
     <div class="card mt-4" style="width: 20rem;">
-      <img src="${escape(listing.thumbnail_image_url)}" class="card-img-top">
-      <div class="card-body">
+      <div style="flex-grow: 1;">
+        <img src="${escape(listing.thumbnail_image_url)}" class="card-img-top">
+      </div>
+      <div class="card-body" style="flex-grow: 0;">
         <h5 class="card-title">${escape(listing.title)}</h5> ${getPrice(listing)}
         <p class="card-text">${escape(listing.description)}</p>
         ${build_listing_buttons(listing)}
