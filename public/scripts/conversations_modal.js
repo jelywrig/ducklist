@@ -1,8 +1,8 @@
 
-const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id, to_user }) {
+const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id, to_user, re_item , other_user}) {
   // console.log(new Date(sent_at))
   const $conversation = $(`
-    <a href="#" class="list-group-item list-group-item-action">
+    <a href="#" class="list-group-item list-group-item-action" data-re_item="${re_item}" data-other_user="${other_user}">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">Re: ${escape(title)}</h5>
         <small>${displayDate(sent_at)}</small>
@@ -55,6 +55,11 @@ const openConversationsModal = function(event) {
       const $modal = buildModal();
       $modalBody = $modal.find('.modal-body');
       $modalBody.append(...conversations)
+      $modalBody.find('a').click(function(event) {
+        event.preventDefault();
+        displayConversationModal(this.dataset.other_user,this.dataset.re_item);
+        $modal.modal("toggle");
+      })
       $('#conversations-modal-container').html($modal);
     })
   // const $modal = buildModal();
