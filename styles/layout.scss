@@ -16,6 +16,12 @@ body {
 
 #filter_slidedown {
   display: none;
+
+  >form {
+    width: 70%;
+    max-width: 40rem;
+    margin: auto;
+  }
 }
 
 span.sold {
