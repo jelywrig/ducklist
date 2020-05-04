@@ -90,8 +90,12 @@ module.exports = (db) => {
 
   router.get("/messages/by_item_and_user/:item_id/:user_id", (req, res) => {
     db.query(`
-      SELECT *
+      SELECT u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, u2.id as to_user_id, content,
+      sent_at, items.title as item_title, (CASE WHEN from_user = $1 THEN to_user ELSE from_user END) as other_user_id, $3::integer as user_id
       FROM messages
+      JOIN users u1 on from_user = u1.id
+      JOIN users u2 on to_user = u2.id
+      JOIN items ON re_item = items.id
       WHERE re_item = $1
         AND $2 IN (from_user, to_user)
         AND $3 IN (from_user, to_user)
@@ -101,6 +105,7 @@ module.exports = (db) => {
         const messages = data.rows
         res.json({ messages })
       })
+      .catch(error => console.log(error));
   })
 
   router.post("/messages", (req, res) => {
