@@ -50,7 +50,7 @@ const createConversationModal = function (data) {
     $modal.find('#messages-container').append($(`
     <div class="d-flex w-100 justify-content-between">
       <h5>${escape(message.from_user_id === message.user_id ? 'Me' :message.from_user)} </h5>
-      <p>${escape(message.content)}</p>
+      <p class="ml-3" >${escape(message.content)}</p>
     </div>
     `));
   }
