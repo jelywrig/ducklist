@@ -103,6 +103,16 @@ module.exports = (db) => {
       })
   })
 
+  router.post("/messages", (req, res) => {
+
+    const {owner_id, item_id, content} = req.body;
+    console.log("in messages endpoint");
+    const queryParams = [req.session.user_id, owner_id, content, item_id];
+    db.query(`INSERT INTO messages (from_user, to_user, content, re_item) VALUES ($1, $2, $3, $4)`, queryParams)
+    .then(res.json({success: true}));
+
+  })
+
   // body: {
   //   favourite: `Bool`
   //   unfavourite: `Bool`
