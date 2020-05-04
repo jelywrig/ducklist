@@ -48,13 +48,11 @@ const build_listing = function(listing) {
       event.preventDefault();
       const formData = { sold: true };
       $.post(`/api/listings/${listing.id}`, formData, render_listings)
-
     })
     $listing.find('.btn-danger').click(function(event) {
       event.preventDefault()
       const formData = { inactive: true };
       $.post(`/api/listings/${listing.id}`, formData, render_listings)
-
     })
   }
   return $listing
