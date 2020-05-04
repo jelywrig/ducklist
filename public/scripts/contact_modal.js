@@ -1,5 +1,4 @@
 
-
 const displayContactModal = function(owner_id, item_id, item_title) {
 
   const $modal = $(`
