@@ -43,6 +43,7 @@
         </ul>
       </div>
     </nav>
+
     <div id="filter_slidedown">
       <form class="form-inline justify-content-center">
         <label for="from_price">Min. Price</label>
@@ -89,7 +90,12 @@
               </div>
               <div class="form-group">
                 <label for="price-input">Price</label>
-                <input type="number" name="price" class="form-control" id="price-input" placeholder="Enter price" required>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupPrepend">$</span>
+                  </div>
+                  <input type="number" step="0.01" name="price" class="form-control" id="price-input" placeholder="Enter price" required>
+                </div>
               </div>
             </form>
 
