@@ -6,8 +6,8 @@ const render_filtered_listings = function() {
     url: '/api/listings',
     type: "get",
     data:{
-      from_price: $('#from_price').val() * 100,
-      to_price: $('#to_price').val() * 100,
+      from_price: Math.round($('#from_price').val() * 100),
+      to_price: Math.round($('#to_price').val() * 100),
       favourites: $( "#favourites" ).is(":checked"),
       my_listings: $("#my_listings").is(":checked")
     },
