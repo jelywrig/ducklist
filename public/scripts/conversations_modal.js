@@ -1,14 +1,14 @@
 
-const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id }) {
+const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id, to_user }) {
   // console.log(new Date(sent_at))
   const $conversation = $(`
     <a href="#" class="list-group-item list-group-item-action">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">${escape(title)}</h5>
+        <h5 class="mb-1">Re: ${escape(title)}</h5>
         <small>${displayDate(sent_at)}</small>
       </div>
       <p class="mb-1" style="font-weight: bold;">${escape(content)}</p>
-      <small>From: ${user_id === from_user_id ? 'Me' : from_user}</small>
+      <small>${user_id === from_user_id ? `To: ${to_user}`: `From: ${from_user}`}</small>
     </a>
   `);
   return $conversation;
