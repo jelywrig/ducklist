@@ -46,13 +46,17 @@ const build_listing = function(listing) {
     // Sold and Delete button event listeners
     $listing.find('.btn-success').click(function(event) {
       event.preventDefault();
-      const formData = { sold: true };
-      $.post(`/api/listings/${listing.id}`, formData, render_listings)
+      if (confirm("Are you sure this item is sold?")) {
+        const formData = { sold: true };
+        $.post(`/api/listings/${listing.id}`, formData, render_listings)
+      }
     })
     $listing.find('.btn-danger').click(function(event) {
       event.preventDefault()
-      const formData = { inactive: true };
-      $.post(`/api/listings/${listing.id}`, formData, render_listings)
+      if (confirm("Are you sure this item should be deleted?")) {
+        const formData = { inactive: true };
+        $.post(`/api/listings/${listing.id}`, formData, render_listings)
+      }
     })
   }
   return $listing
