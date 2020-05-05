@@ -1,6 +1,6 @@
 
 
-const render_filtered_listings = function() {
+const renderFilteredListings = function() {
   const container = $('#listings_container');
   $.ajax({
     url: '/api/listings',
@@ -13,7 +13,7 @@ const render_filtered_listings = function() {
     },
     success: function(data) {
       container.empty();
-      const listings = data.listings.map(build_listing);
+      const listings = data.listings.map(buildListing);
       container.append(...listings);
     }
   })
@@ -33,7 +33,7 @@ $(document).ready(function() {
 
   $('#filter_slidedown button').click(function(event){
     event.preventDefault();
-    render_filtered_listings();
+    renderFilteredListings();
   })
 
 

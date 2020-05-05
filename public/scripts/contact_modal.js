@@ -1,3 +1,4 @@
+
 const displayContactModal = function(owner_id, item_id, item_title) {
 
   const $modal = $(`
@@ -35,7 +36,7 @@ const displayContactModal = function(owner_id, item_id, item_title) {
   $modal.modal('toggle');
   $modal.find('.btn-primary').click(function(event) {
     event.preventDefault();
-    const formData = {owner_id, item_id, content: $('#message-input').val()};
+    const formData = {to_user: owner_id, item_id, content: $('#message-input').val()};
     $.post('/api/messages', formData, () => $modal.modal('toggle'));
   });
 

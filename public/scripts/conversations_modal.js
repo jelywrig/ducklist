@@ -1,21 +1,21 @@
 
-const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id }) {
+const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id, to_user, re_item , other_user}) {
   // console.log(new Date(sent_at))
   const $conversation = $(`
-    <a href="#" class="list-group-item list-group-item-action">
+    <a href="#" class="list-group-item list-group-item-action" data-re_item="${re_item}" data-other_user="${other_user}">
       <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">${escape(title)}</h5>
+        <h5 class="mb-1">Re: ${escape(title)}</h5>
         <small>${displayDate(sent_at)}</small>
       </div>
       <p class="mb-1" style="font-weight: bold;">${escape(content)}</p>
-      <small>From: ${user_id === from_user_id ? 'Me' : from_user}</small>
+      <small>${user_id === from_user_id ? `To: ${to_user}`: `From: ${from_user}`}</small>
     </a>
   `);
   return $conversation;
 }
 
 const buildModalBody = function() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     $.get("/api/messages/summaries", data => {
       console.log(data.messages)
       resolve(data.messages.map(buildConversation))
@@ -55,10 +55,11 @@ const openConversationsModal = function(event) {
       const $modal = buildModal();
       $modalBody = $modal.find('.modal-body');
       $modalBody.append(...conversations)
+      $modalBody.find('a').click(function(event) {
+        event.preventDefault();
+        displayConversationModal(this.dataset.other_user,this.dataset.re_item);
+        $modal.modal("toggle");
+      })
       $('#conversations-modal-container').html($modal);
     })
-  // const $modal = buildModal();
-  // $modalBody = $modal.find('.modal-body');
-  // $modalBody.append(...buildModalBody())
-  // $('#conversations-modal-container').html($modal);
 }
