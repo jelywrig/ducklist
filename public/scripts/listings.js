@@ -81,7 +81,6 @@ const createListingHandler = function(event) {
   $.post("/api/listings", formData, () => {
     $('#createListingModal').modal('toggle');
     renderListings();
-
   })
 }
 
