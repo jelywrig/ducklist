@@ -15,7 +15,7 @@ const buildConversation = function({ title, sent_at, content, user_id, from_user
 }
 
 const buildModalBody = function() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     $.get("/api/messages/summaries", data => {
       console.log(data.messages)
       resolve(data.messages.map(buildConversation))
@@ -62,8 +62,4 @@ const openConversationsModal = function(event) {
       })
       $('#conversations-modal-container').html($modal);
     })
-  // const $modal = buildModal();
-  // $modalBody = $modal.find('.modal-body');
-  // $modalBody.append(...buildModalBody())
-  // $('#conversations-modal-container').html($modal);
 }
