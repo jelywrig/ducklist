@@ -10,6 +10,9 @@ const sass          = require("node-sass-middleware");
 const app           = express();
 const morgan        = require('morgan');
 const cookieSession = require('cookie-session');
+// for socket.io
+const http          = require('http').createServer(app);
+const io            = require('socket.io')(http);
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -79,6 +82,17 @@ app.get('/logout', (req,res) => {
 });
 
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`Example app listening on port ${PORT}`);
+// });
+//socket.io
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('message', (msg) => {
+    console.log('message: ', msg);
+    socket.broadcast.emit('message', msg);
+  })
 });
+http.listen(8080,() => {
+  console.log('http listening on 8080');
+})
