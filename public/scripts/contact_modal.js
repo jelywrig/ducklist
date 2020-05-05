@@ -1,6 +1,6 @@
 
 const displayContactModal = function(owner_id, item_id, item_title) {
-
+$('#message-modal-container').empty();
   const $modal = $(`
   <div class="modal fade" id="createMessageModal" tabindex="-1" role="dialog" aria-labelledby="createMessageModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
