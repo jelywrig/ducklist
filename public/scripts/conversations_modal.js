@@ -1,6 +1,5 @@
 
 const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id, to_user, re_item , other_user}) {
-  // console.log(new Date(sent_at))
   const $conversation = $(`
     <a href="#" class="list-group-item list-group-item-action" data-re_item="${re_item}" data-other_user="${other_user}">
       <div class="d-flex w-100 justify-content-between">
@@ -17,7 +16,6 @@ const buildConversation = function({ title, sent_at, content, user_id, from_user
 const buildModalBody = function() {
   return new Promise((resolve) => {
     $.get("/api/messages/summaries", data => {
-      console.log(data.messages)
       resolve(data.messages.map(buildConversation))
     })
   })
