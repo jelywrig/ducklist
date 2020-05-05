@@ -28,3 +28,12 @@ span.sold {
   color: red;
   font-weight: bold;
 }
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+
+  p.card-text {
+    flex-grow: 1;
+  }
+}
