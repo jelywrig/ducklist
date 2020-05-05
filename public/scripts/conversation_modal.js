@@ -5,7 +5,7 @@ const displayConversationModal = function (other_user_id, item_id) {
 
   $.get(`/api/messages/by_item_and_user/${escape(item_id)}/${escape(other_user_id)}`, data => {
     const $modal = createConversationModal(data);
-    $('#conversation-modal-container').append($modal);
+    $('#conversation-modal-container').html($modal);
     $modal.modal('toggle');
   });
 }
