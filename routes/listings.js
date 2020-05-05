@@ -38,7 +38,7 @@ module.exports = (db) => {
   })
 
   router.post("/", (req, res) => {
-    const queryParams = [req.session.user_id, req.body.title, req.body.description, req.body.image_url, req.body.price * 100];
+    const queryParams = [req.session.user_id, req.body.title, req.body.description, req.body.image_url, Math.round(req.body.price * 100)];
     db.query("INSERT INTO items (owner_id, title, description, thumbnail_image_url, price_in_cents) VALUES ($1,$2,$3,$4,$5) RETURNING * ", queryParams)
     .then(data => {
       res.json(data.rows[0]);
