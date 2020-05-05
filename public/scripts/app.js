@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-  render_listings();
-  $('#create-listing-form').submit(create_listing_handler);
+  renderListings();
+  $('#create-listing-form').submit(createListingHandler);
   $('#navbar__messages-button').click(openConversationsModal);
 })

@@ -10,6 +10,9 @@ const displayDate = function(dateString) {
   // Milliseconds Passed
   const msPassed = new Date() - date;
   const minPassed = msPassed / (1000 * 60);
+  if (minPassed === 0) {
+    return 'Just now'
+  }
   if (minPassed < 60) {
     return `${Math.round(minPassed)} min ago`;
   }
