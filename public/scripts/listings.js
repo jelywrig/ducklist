@@ -19,20 +19,24 @@ const buildListingButtons = function({ owner_id, user_id, sold_at }) {
 const buildListing = function(listing) {
   const $listing = $(`
     <div class="card mt-4" style="width: 20rem;">
-      <div style="flex-grow: 1;">
+      <div style="height: 20rem;">
         <img src="${escape(listing.thumbnail_image_url)}" class="card-img-top">
       </div>
-      <div class="card-body" style="flex-grow: 0;">
-        <h5 class="card-title">${escape(listing.title)}</h5> ${getPrice(listing)}
+      <div class="card-body">
+        <div>
+          <h5 class="card-title">${escape(listing.title)}</h5> ${getPrice(listing)}
+        </div>
         <p class="card-text">${escape(listing.description)}</p>
-        ${buildListingButtons(listing)}
-        <span class="align-middle float-right">
+        <div>
+          ${buildListingButtons(listing)}
+          <span class="align-middle float-right">
 
-          <form data-listing_id="${listing.id}" data-is_favorite="${listing.favourite}">
-            <input class="material-icons" type="submit" value="${listing.favourite ? 'favorite' : 'favorite_border'}" style="border: none; background-color: transparent;">
-          </form>
+            <form data-listing_id="${listing.id}" data-is_favorite="${listing.favourite}">
+              <input class="material-icons" type="submit" value="${listing.favourite ? 'favorite' : 'favorite_border'}" style="border: none; background-color: transparent;">
+            </form>
 
-        </span>
+          </span>
+        </div>
       </div>
     </div>
   `);
