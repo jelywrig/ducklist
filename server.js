@@ -84,7 +84,22 @@ app.get('/logout', (req,res) => {
   res.redirect('/');
 });
 
+const sendNotification = function (msg) {
+  const message = JSON.parse(msg);
 
+  db.query(`Select phone FROM users WHERE id = $1`, [message.to_user])
+  .then(data => {
+    const phoneNumber = data.rows[0].phone;
+    console.log('sending message to ', phoneNumber);
+    smsClient.messages.create({
+      body: 'You have a new Quackslist message',
+      from: '+16043309728',
+      to: phoneNumber
+    }).then(sms => console.log(sms.sid))
+    .catch(error => console.log(error));
+  })
+
+};
 // app.listen(PORT, () => {
 //   console.log(`Example app listening on port ${PORT}`);
 // });
@@ -94,11 +109,8 @@ io.on('connection', (socket) => {
   socket.on('message', (msg) => {
     console.log('message: ', msg);
     socket.broadcast.emit('message', msg);
-    smsClient.messages.create({
-      body: 'You have a new Quackslist message',
-      from: '+16043309728',
-      to: '+16044013694'
-    }).then(sms => console.log(sms.sid));
+    sendNotification(msg);
+
   })
 });
 http.listen(PORT,() => {
