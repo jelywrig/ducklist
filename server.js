@@ -14,6 +14,9 @@ const cookieSession = require('cookie-session');
 const http          = require('http').createServer(app);
 const io            = require('socket.io')(http);
 
+// for twilio
+const smsClient = require('twilio')(process.env.TWILIO_ACCOUNT, process.env.TWILIO_AUTH);
+
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
@@ -91,8 +94,13 @@ io.on('connection', (socket) => {
   socket.on('message', (msg) => {
     console.log('message: ', msg);
     socket.broadcast.emit('message', msg);
+    smsClient.messages.create({
+      body: 'You have a new Quackslist message',
+      from: '+16043309728',
+      to: '+16044013694'
+    }).then(sms => console.log(sms.sid));
   })
 });
-http.listen(8080,() => {
+http.listen(PORT,() => {
   console.log('http listening on 8080');
 })

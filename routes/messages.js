@@ -4,14 +4,16 @@ const router  = express.Router();
 module.exports = (db) => {
   router.get("/summaries", (req, res) => {
     db.query(`
-      Select DISTINCT ON ((CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item) i.title,
+      SELECT x.* FROM (Select DISTINCT ON ((CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item) i.title,
       messages.id, u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, content, sent_at, re_item, (CASE WHEN from_user = $1 THEN to_user ELSE from_user END) as other_user, $1::INTEGER as user_id
       FROM messages
       JOIN users u1 on from_user = u1.id
       JOIN users u2 on to_user = u2.id
       JOIN items i on re_item = i.id
       WHERE u1.id = $1 OR u2.id = $1
-      ORDER BY (CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item, sent_at DESC;
+      ORDER BY (CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item, sent_at DESC) as x
+      ORDER BY sent_at DESC;
+
     `, [req.session.user_id])
       .then(data => {
         const messages = data.rows;

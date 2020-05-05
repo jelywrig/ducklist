@@ -22,7 +22,7 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">Ducklist</a>
+      <a class="navbar-brand" href="/">Quackslist</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -159,7 +159,8 @@
       socket.on('message', function (msg) {
         const message = JSON.parse(msg);
         if(message.to_user === currentUser) {
-          alert(message.content);
+        $('#navbar__messages-button').css('color', 'red');
+         // alert(message.content);
         }
       })
     </script>

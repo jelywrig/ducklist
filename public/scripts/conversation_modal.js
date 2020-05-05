@@ -58,8 +58,11 @@ const createConversationModal = function (data) {
   $modal.find('#reply-btn').click(event => {
     event.preventDefault();
     const content = $("#reply-input").val();
-    formData = {to_user: other_user, content, item_id};
-    $.post('/api/messages', formData, () => $modal.modal('toggle'));
+    const formData = {to_user: other_user, content, item_id};
+    const socket = io();
+    socket.emit('message', JSON.stringify(formData));
+    $.post('/api/messages', formData, () =>
+      $modal.modal('toggle'));
   });
 
 

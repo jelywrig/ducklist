@@ -1,6 +1,6 @@
 
 const displayContactModal = function(owner_id, item_id, item_title) {
-
+ $('#message-modal-container').empty();
   const $modal = $(`
   <div class="modal fade" id="createMessageModal" tabindex="-1" role="dialog" aria-labelledby="createMessageModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -37,6 +37,8 @@ const displayContactModal = function(owner_id, item_id, item_title) {
   $modal.find('.btn-primary').click(function(event) {
     event.preventDefault();
     const formData = {to_user: owner_id, item_id, content: $('#message-input').val()};
+    const socket = io();
+    socket.emit('message', JSON.stringify(formData));
     $.post('/api/messages', formData, () => $modal.modal('toggle'));
   });
 

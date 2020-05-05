@@ -48,6 +48,7 @@ const buildModal = function() {
 
 const openConversationsModal = function(event) {
   event.preventDefault();
+  $('#navbar__messages-button').css('color', '');
   buildModalBody()
     .then(conversations => {
       const $modal = buildModal();
