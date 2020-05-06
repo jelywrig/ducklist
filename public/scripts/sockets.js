@@ -24,7 +24,7 @@ socket.on('private_message', data => {
         from_user: other_user_name,
         from_user_id: from_user,
         user_id: to_user
-      }))
+      }, true))
     }
   }
 })
