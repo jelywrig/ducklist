@@ -23,11 +23,11 @@ const buildModalBody = function() {
 
 const buildModal = function() {
   const $modal = $(`
-    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal fade" id="conversationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Conversations</h5>
+            <h5 class="modal-title">Conversations</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -48,6 +48,7 @@ const buildModal = function() {
 
 const openConversationsModal = function(event) {
   event.preventDefault();
+  $('#navbar__messages-button').find('.badge').empty()
   buildModalBody()
     .then(conversations => {
       const $modal = buildModal();
