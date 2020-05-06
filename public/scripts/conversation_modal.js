@@ -62,20 +62,16 @@ const createConversationModal = function (data) {
     event.preventDefault();
     const content = $("#reply-input").val();
     formData = {to_user: other_user, content, item_id};
-    $.post('/api/messages', formData, () => $modal.modal('toggle'));
+    $.post('/api/messages', formData, () => {
+      console.log(messages)
+      $messagesContainer.append(createMessage({
+        content,
+        from_user_id: messages[0].user_id,
+        from_user: messages[0].from_user
+      }))
+    });
     socket.emit('private_message', { content, toId: other_user, item_id })
   });
-
-  // socket.on('private_message', data => {
-  //   const { from, content } = data;
-  //   if (from === other_user) {
-  //     $messagesContainer.append(createMessage({
-  //       content,
-  //       from_user_id: from,
-  //       from_user: messages[0].from_user
-  //     }))
-  //   }
-  // })
 
   return $modal;
 }
