@@ -13,7 +13,7 @@ const displayConversationModal = function (other_user_id, item_id) {
 const createMessage = function(message) {
   return `
     <div class="d-flex w-100 justify-content-between">
-      <h5>${escape(message.from_user_id === message.user_id ? 'Me' : message.from_user)} </h5>
+      <h5>${escape(message.from_user_id == message.user_id ? 'Me' : message.from_user)} </h5>
       <p class="ml-3" >${escape(message.content)}</p>
     </div>
   `
@@ -24,8 +24,13 @@ const createConversationModal = function (data) {
   const item_title = messages[0].item_title;
   const other_user = messages[0].other_user_id;
   const item_id = messages[0].item_id;
+  const other_user_name = messages[0].other_user_name;
+
+  console.log(messages);
   const $modal = $(`
-<div class="modal fade" id="conversationModal" tabindex="-1" role="dialog" aria-labelledby="conversationModalTitle" aria-hidden="true" data-item_id="${item_id}" data-other_user="${other_user}" data-from_user="${messages[0].from_user}">
+<div class="modal fade" id="conversationModal" tabindex="-1" role="dialog" aria-labelledby="conversationModalTitle" aria-hidden="true"
+  data-item_id="${item_id}" data-other_user="${other_user}" data-other_user_name="${other_user_name}"
+>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -61,16 +66,29 @@ const createConversationModal = function (data) {
   $modal.find('#reply-btn').click(event => {
     event.preventDefault();
     const content = $("#reply-input").val();
-    formData = {to_user: other_user, content, item_id};
-    $.post('/api/messages', formData, () => {
-      console.log(messages)
-      $messagesContainer.append(createMessage({
-        content,
-        from_user_id: messages[0].user_id,
-        from_user: messages[0].from_user
-      }))
-    });
-    socket.emit('private_message', { content, toId: other_user, item_id })
+    const formData = {to_user: other_user, content, item_id};
+    // console.log(messages)
+    $.post('/api/messages', formData);
+    formData.from_user = messages[0].user_id;
+    socket.emit('private_message', formData)
+    $messagesContainer.append(createMessage({
+      content: formData.content,
+      from_user: 'Me',
+      from_user_id: formData.from_user,
+      user_id: formData.from_user
+    }))
+    // $messagesContainer.append(createMessage({
+    //   content,
+    //   user_id: messages[0].user_id,
+    //   from_user_id: messages[0].from_user_id,
+    //   from_user: messages[0].from_user
+    // }))
+    // socket.emit('private_message', {
+    //   content,
+    //   item_id,
+    //   toId: other_user,
+    //   user_id: messages[0].user_id
+    // })
   });
 
   return $modal;

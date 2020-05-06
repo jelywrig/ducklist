@@ -10,17 +10,25 @@ $.get('/api/messages/summaries', data => {
 socket.on('private_message', data => {
   const $conversationModal = $('#conversation-modal-container').find('#conversationModal');
   if ($conversationModal.hasClass('show')) {
-    const item_id = $conversationModal.data('item_id');
+    const conv_item_id = $conversationModal.data('item_id');
     const other_user = $conversationModal.data('other_user');
-    const from_user = $conversationModal.data('from_user');
+    const other_user_name = $conversationModal.data('other_user_name');
+    // const from_user = $conversationModal.data('from_user'); // i think this line is part of our problem
+    // const user_id = $conversationModal.data('user_id');
+
 
     const $messagesContainer = $conversationModal.find('#messages-container');
-    const { to_item_id, from, content } = data;
-    if (from === other_user && item_id === to_item_id ) {
+
+    // const { to_item_id, from, content, user_id } = data;
+    const {to_user, content, item_id, from_user} = data;
+
+    console.log(data)
+    if (from_user == other_user && conv_item_id == item_id ) {
       $messagesContainer.append(createMessage({
         content,
-        from_user,
-        from_user_id: from
+        from_user: other_user_name,
+        from_user_id: from_user,
+        user_id: to_user
       }))
     }
   }

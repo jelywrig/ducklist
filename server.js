@@ -98,12 +98,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('private_message', (data) => {
-      const { content, toId, item_id } = data;
-      if (sockets[toId]) {
-        sockets[toId].forEach(sock => {
-          io.to(sock.id).emit('private_message', { content, to_item_id: item_id, from: user_id })
-        });
+      const {to_user, content, item_id, from_user} = data;
+      if (sockets[to_user]) {
+        sockets[to_user].forEach(sock => {
+          io.to(sock.id).emit('private_message', data)
+        })
       }
+      // const { content, toId, item_id } = data;
+      // if (sockets[toId]) {
+      //   sockets[toId].forEach(sock => {
+      //     io.to(sock.id).emit('private_message', { content, to_item_id: item_id, from: user_id, user_id: toId })
+      //   });
+      // }
     });
   });
 })

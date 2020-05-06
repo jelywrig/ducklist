@@ -5,8 +5,9 @@ module.exports = (db) => {
   router.get("/summaries", (req, res) => {
     db.query(`
       Select DISTINCT ON ((CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item) i.title,
-      messages.id, u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, content, sent_at, re_item, (CASE WHEN from_user = $1 THEN to_user ELSE from_user END) as other_user, $1::INTEGER as user_id,
-        i.owner_id AS owner_id
+      messages.id, u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, content, sent_at, re_item,
+      (CASE WHEN from_user = $1 THEN to_user ELSE from_user END) as other_user, $1::INTEGER as user_id,
+      i.owner_id AS owner_id
       FROM messages
       JOIN users u1 on from_user = u1.id
       JOIN users u2 on to_user = u2.id
@@ -23,7 +24,9 @@ module.exports = (db) => {
   router.get("/by_item_and_user/:item_id/:user_id", (req, res) => {
     db.query(`
       SELECT u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, u2.id as to_user_id, content, items.id as item_id,
-      sent_at, items.title as item_title, (CASE WHEN from_user = $3 THEN to_user ELSE from_user END) as other_user_id, $3::integer as user_id
+      sent_at, items.title as item_title, (CASE WHEN from_user = $3 THEN to_user ELSE from_user END) as other_user_id,
+      (CASE WHEN from_user = $3 THEN u2.first_name ELSE u1.first_name END ) as other_user_name,
+       $3::integer as user_id
       FROM messages
       JOIN users u1 on from_user = u1.id
       JOIN users u2 on to_user = u2.id
