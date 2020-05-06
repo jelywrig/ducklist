@@ -98,43 +98,16 @@ io.on('connection', (socket) => {
     })
 
     socket.on('private_message', (data) => {
-      const {to_user, content, item_id, from_user} = data;
+      const {to_user} = data;
       if (sockets[to_user]) {
         sockets[to_user].forEach(sock => {
           io.to(sock.id).emit('private_message', data)
         })
       }
-      // const { content, toId, item_id } = data;
-      // if (sockets[toId]) {
-      //   sockets[toId].forEach(sock => {
-      //     io.to(sock.id).emit('private_message', { content, to_item_id: item_id, from: user_id, user_id: toId })
-      //   });
-      // }
     });
   });
 })
 
-// io.on('connection', (socket) => {
-//   console.log('User connected');
-//   // socket.on('user data', function(data) {
-//   //   console.log('User:', data.userId)
-//   // })
-//   socket.on('join rooms', function(data) {
-//     // console.log(data.rooms)
-//     for (const room of data.rooms) {
-//       socket.join(room)
-//       socket.on(room, function(msg) {
-//         console.log(msg)
-//         socket.to(room).emit('new msg', msg)
-//       })
-//     }
-//   })
-// });
-
 http.listen(PORT, () => {
   console.log(`listening on *:${PORT}`);
 });
-
-// app.listen(PORT, () => {
-//   console.log(`Example app listening on port ${PORT}`);
-// });

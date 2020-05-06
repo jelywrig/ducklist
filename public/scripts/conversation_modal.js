@@ -29,7 +29,6 @@ const createConversationModal = function (data) {
   const item_id = messages[0].item_id;
   const other_user_name = messages[0].other_user_name;
 
-  console.log(messages);
   const $modal = $(`
 <div class="modal fade" id="conversationModal" tabindex="-1" role="dialog" aria-labelledby="conversationModalTitle" aria-hidden="true"
   data-item_id="${item_id}" data-other_user="${other_user}" data-other_user_name="${other_user_name}"
@@ -70,7 +69,6 @@ const createConversationModal = function (data) {
     event.preventDefault();
     const content = $("#reply-input").val();
     const formData = {to_user: other_user, content, item_id};
-    // console.log(messages)
     $.post('/api/messages', formData, () => {
       $("#reply-input").val('');
     });
@@ -82,18 +80,6 @@ const createConversationModal = function (data) {
       from_user_id: formData.from_user,
       user_id: formData.from_user
     }))
-    // $messagesContainer.append(createMessage({
-    //   content,
-    //   user_id: messages[0].user_id,
-    //   from_user_id: messages[0].from_user_id,
-    //   from_user: messages[0].from_user
-    // }))
-    // socket.emit('private_message', {
-    //   content,
-    //   item_id,
-    //   toId: other_user,
-    //   user_id: messages[0].user_id
-    // })
   });
 
   return $modal;
