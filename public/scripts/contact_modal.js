@@ -32,7 +32,7 @@ $('#message-modal-container').empty();
 </div>
   `);
 
-  $('#message-modal-container').append($modal);
+  $('#message-modal-container').html($modal);
   $modal.modal('toggle');
   $modal.find('.btn-primary').click(function(event) {
     event.preventDefault();
