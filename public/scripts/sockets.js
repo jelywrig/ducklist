@@ -24,6 +24,11 @@ socket.on('private_message', data => {
         from_user: other_user_name,
         from_user_id: from_user,
         user_id: to_user
+      }))
+    } else {
+      console.log('other convo showing');
+      $("#back-btn").html('New Message').addClass('msg-alert-btn');  // do something to back btn-
+      // and highlight messages?
       }, true))
     }
   }
