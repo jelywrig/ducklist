@@ -50,7 +50,8 @@ app.use("/api/listings", listingsRouter(db));
 app.use("/api/messages", messagesRouter(db));
 
 // Note: mount other resources here, using the same pattern above
-
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -79,6 +80,34 @@ app.get('/logout', (req,res) => {
 });
 
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+const sockets = {}
+io.on('connection', (socket) => {
+  console.log('User connected');
+
+  socket.on('user_data', (data) => {
+    const { user_id } = data;
+    if (!sockets[user_id]) {
+      sockets[user_id] = [];
+    }
+    sockets[user_id].push(socket);
+
+    socket.on('disconnect', () => {
+      sockets[user_id] = sockets[user_id].filter(sock => {
+        return sock.id !== socket.id;
+      })
+    })
+
+    socket.on('private_message', (data) => {
+      const {to_user} = data;
+      if (sockets[to_user]) {
+        sockets[to_user].forEach(sock => {
+          io.to(sock.id).emit('private_message', data)
+        })
+      }
+    });
+  });
+})
+
+http.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`);
 });

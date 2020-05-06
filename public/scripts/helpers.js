@@ -27,3 +27,13 @@ const displayDate = function(dateString) {
     return `${daysPassed} days ago`
   }
 }
+
+const getRoomFromMessage = function({ re_item, owner_id, user_id, other_user }) {
+  let room = `${re_item}-${owner_id}`
+  if (owner_id === user_id) {
+    room += `-${other_user}`
+  } else {
+    room += `-${user_id}`
+  }
+  return room
+}
