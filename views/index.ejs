@@ -50,7 +50,7 @@
           </li>
           <% } else { %>
           </li> <li class="nav-item">
-            <a class="nav-link" href="#">Sign Up</a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#userSignUpModal">Sign Up</a>
           </li>
           <% } %>
         </ul>
@@ -156,6 +156,50 @@
       </div>
     </div>
 
+    <!--- User Sign Up Modal-->
+    <div class="modal fade" id="userSignUpModal" tabindex="-1" role="dialog" aria-labelledby="userSignUpModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userSignUpModalTitle">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <!-- Modal Form Content -->
+            <form id="create-user-form">
+              <div class="form-group">
+                <label for="firstName-input">First Name</label>
+                <input type="text" name="firstName" class="form-control" id="firstName" aria-describedby="firstName-input" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName-input">Last Name</label>
+                <input type="text" name="lastName" class="form-control" id="lastName-input" aria-describedby="lastName-input" required>
+              </div>
+              <div class="form-group">
+                <label for="email-input">Email</label>
+                <input type="email" name="email" class="form-control" id="email-input" required>
+              </div>
+              <div class="form-group">
+                <label for="phone-input">Phone Number</label>
+                <input type="phone" name="phone" class="form-control" id="phone-input" required>
+              </div>
+              <div class="form-group">
+                <label for="is_admin">Do you wish to create postings?</label>
+                <input type="checkbox" name="is_admin"  id="is_admin-input">
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="create-user-form">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--- for bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
