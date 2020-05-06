@@ -52,6 +52,9 @@
           </li> <li class="nav-item">
             <a class="nav-link" href="#" data-toggle="modal" data-target="#userSignUpModal">Sign Up</a>
           </li>
+          <li>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#userLogInModal">Log In</a>
+          </li>
           <% } %>
         </ul>
       </div>
@@ -196,6 +199,39 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" form="create-user-form">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Log in Modal-->
+    <div class="modal fade" id="userLogInModal" tabindex="-1" role="dialog" aria-labelledby="userLoginModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userLogInModalTitle">Log In</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <!-- Modal Form Content -->
+            <form id="login-form">
+              <div class="form-group">
+                <label for="email-input">Email</label>
+                <input type="email" name="email" class="form-control" id="login-email-input" required>
+              </div>
+              <div class="form-group">
+                <label for="password-input">Password</label>
+                <input type="text" name="password" class="form-control" id="password-input" aria-describedby="lastName-input" required>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="login-form">Login</button>
           </div>
         </div>
       </div>
