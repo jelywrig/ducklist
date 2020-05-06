@@ -41,4 +41,12 @@ span.sold {
 .msg-alert-btn {
   color: red;
   background-color: transparent;
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+div.new-msg {
+  animation-name: fadeIn;
+  animation-duration: 2s;
 }
