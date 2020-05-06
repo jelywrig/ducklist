@@ -7,6 +7,9 @@ const displayConversationModal = function (other_user_id, item_id) {
     const $modal = createConversationModal(data);
     $('#conversation-modal-container').html($modal);
     $modal.modal('toggle');
+    setTimeout(() => {
+      $modal.find("#reply-input").focus();
+    }, 500)
   });
 }
 
@@ -31,7 +34,7 @@ const createConversationModal = function (data) {
 <div class="modal fade" id="conversationModal" tabindex="-1" role="dialog" aria-labelledby="conversationModalTitle" aria-hidden="true"
   data-item_id="${item_id}" data-other_user="${other_user}" data-other_user_name="${other_user_name}"
 >
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="conversationModalTitle">Conversation Re: ${escape(item_title)}</h5>
@@ -68,7 +71,9 @@ const createConversationModal = function (data) {
     const content = $("#reply-input").val();
     const formData = {to_user: other_user, content, item_id};
     // console.log(messages)
-    $.post('/api/messages', formData);
+    $.post('/api/messages', formData, () => {
+      $("#reply-input").val('');
+    });
     formData.from_user = messages[0].user_id;
     socket.emit('private_message', formData)
     $messagesContainer.append(createMessage({
