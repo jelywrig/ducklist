@@ -27,7 +27,7 @@ socket.on('private_message', data => {
       }))
     } else {
       console.log('other convo showing');
-      $("#back-btn").html('New Message').addClass('msg-alert');  // do something to back btn-
+      $("#back-btn").html('New Message').addClass('msg-alert-btn');  // do something to back btn-
       // and highlight messages?
     }
   }
