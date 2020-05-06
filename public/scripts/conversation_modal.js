@@ -55,6 +55,7 @@ const createConversationModal = function (data) {
 
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="back-btn">Back</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" id="reply-btn" form="reply-message-form">Send</button>
       </div>
@@ -64,6 +65,12 @@ const createConversationModal = function (data) {
   `);
   const $messagesContainer = $modal.find('#messages-container');
   $messagesContainer.append(...messages.map(createMessage));
+
+  $modal.find('#back-btn').click(event => {
+    event.preventDefault();
+    openConversationsModal(event);
+    $modal.modal('toggle');
+  });
 
   $modal.find('#reply-btn').click(event => {
     event.preventDefault();

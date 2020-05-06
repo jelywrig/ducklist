@@ -25,6 +25,10 @@ socket.on('private_message', data => {
         from_user_id: from_user,
         user_id: to_user
       }))
+    } else {
+      console.log('other convo showing');
+      $("#back-btn");  // do something to back btn-
+      // and highlight messages?
     }
   }
 })
