@@ -10,6 +10,20 @@ const displayConversationModal = function (other_user_id, item_id) {
   });
 }
 
+const updateConversationMessages = function ($modal, messages) {
+  $messageContainer = $modal.find("#messages-container");
+  //$modal.find('#messages-container')
+  for(message of messages) {
+    $messageContainer.append($(`
+    <div class="d-flex w-100 justify-content-between">
+      <h5>${escape(message.from_user_id === message.user_id ? 'Me' : message.from_user)} </h5>
+      <p class="ml-3" >${escape(message.content)}</p>
+    </div>
+    `));
+  }
+
+}
+
 const createConversationModal = function (data) {
   const messages = data.messages;
   const item_title = messages[0].item_title;
@@ -17,7 +31,7 @@ const createConversationModal = function (data) {
   const item_id = messages[0].item_id;
   const $modal = $(`
 <div class="modal fade" id="conversationModal" tabindex="-1" role="dialog" aria-labelledby="conversationModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="conversationModalTitle">Conversation Re: ${escape(item_title)}</h5>
@@ -46,23 +60,16 @@ const createConversationModal = function (data) {
   </div>
 </div>
   `);
-  for(message of messages) {
-    $modal.find('#messages-container').append($(`
-    <div class="d-flex w-100 justify-content-between">
-      <h5>${escape(message.from_user_id === message.user_id ? 'Me' :message.from_user)} </h5>
-      <p class="ml-3" >${escape(message.content)}</p>
-    </div>
-    `));
-  }
+
+  updateConversationMessages($modal, messages);
 
   $modal.find('#reply-btn').click(event => {
     event.preventDefault();
     const content = $("#reply-input").val();
     const formData = {to_user: other_user, content, item_id};
     const socket = io();
-    socket.emit('message', JSON.stringify(formData));
-    $.post('/api/messages', formData, () =>
-      $modal.modal('toggle'));
+    //socket.emit('message', JSON.stringify(formData));
+    $.post('/api/messages', formData, () => $modal.modal('toggle'));
   });
 
 

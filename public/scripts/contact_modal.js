@@ -37,8 +37,8 @@ const displayContactModal = function(owner_id, item_id, item_title) {
   $modal.find('.btn-primary').click(function(event) {
     event.preventDefault();
     const formData = {to_user: owner_id, item_id, content: $('#message-input').val()};
-    const socket = io();
-    socket.emit('message', JSON.stringify(formData));
+    //const socket = io();
+    //socket.emit('message', JSON.stringify(formData));
     $.post('/api/messages', formData, () => $modal.modal('toggle'));
   });
 

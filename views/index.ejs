@@ -158,9 +158,9 @@
       const socket = io();
       socket.on('message', function (msg) {
         const message = JSON.parse(msg);
-        if(message.to_user === currentUser) {
+        if(message.to_user == currentUser) {
         $('#navbar__messages-button').css('color', 'red');
-         // alert(message.content);
+
         }
       })
     </script>

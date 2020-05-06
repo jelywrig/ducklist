@@ -49,11 +49,14 @@ app.use(express.static("public"));
 const listingsRouter = require("./routes/listings");
 const messagesRouter = require("./routes/messages");
 
+
+
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api", usersRoutes(db));
 app.use("/api/listings", listingsRouter(db));
-app.use("/api/messages", messagesRouter(db));
+app.use("/api/messages", messagesRouter(db, io));
 
 // Note: mount other resources here, using the same pattern above
 
@@ -84,7 +87,7 @@ app.get('/logout', (req,res) => {
   res.redirect('/');
 });
 
-const sendNotification = function (msg) {
+const sendSMSNotification = function (msg) {
   const message = JSON.parse(msg);
 
   db.query(`Select phone FROM users WHERE id = $1`, [message.to_user])
@@ -103,16 +106,19 @@ const sendNotification = function (msg) {
 // app.listen(PORT, () => {
 //   console.log(`Example app listening on port ${PORT}`);
 // });
+
+//socket io
 //socket.io
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('message', (msg) => {
     console.log('message: ', msg);
     socket.broadcast.emit('message', msg);
-    sendNotification(msg);
+    //sendSMSNotification(msg);
 
   })
 });
+
 http.listen(PORT,() => {
   console.log('http listening on 8080');
 })

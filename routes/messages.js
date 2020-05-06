@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (db) => {
+module.exports = (db, io) => {
   router.get("/summaries", (req, res) => {
     db.query(`
       SELECT x.* FROM (Select DISTINCT ON ((CASE WHEN from_user = $1 THEN to_user ELSE from_user END), re_item) i.title,
@@ -46,7 +46,11 @@ module.exports = (db) => {
     const {to_user, item_id, content} = req.body;
     const queryParams = [req.session.user_id, to_user, content, item_id];
     db.query(`INSERT INTO messages (from_user, to_user, content, re_item) VALUES ($1, $2, $3, $4)`, queryParams)
-    .then(res.json({success: true}));
+    .then(data => {
+      res.json({succes: true});
+      const msg = JSON.stringify({to_user, content: content + 'from post', item_id });
+      io.emit('message', msg );
+    });
 
   })
 
