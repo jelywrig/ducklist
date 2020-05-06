@@ -13,9 +13,9 @@ const displayConversationModal = function (other_user_id, item_id) {
   });
 }
 
-const createMessage = function(message) {
+const createMessage = function(message, socket = false) {
   return `
-    <div class="d-flex w-100 justify-content-between">
+    <div class="d-flex w-100 justify-content-between ${socket ? 'new-msg' : ''}">
       <h5>${escape(message.from_user_id == message.user_id ? 'Me' : message.from_user)} </h5>
       <p class="ml-3" >${escape(message.content)}</p>
     </div>
@@ -63,8 +63,9 @@ const createConversationModal = function (data) {
 </div>
   `);
   const $messagesContainer = $modal.find('#messages-container');
-  $messagesContainer.append(...messages.map(createMessage));
-
+    for(message of messages) {
+      $messagesContainer.append(createMessage(message, false));
+    }
   $modal.find('#reply-btn').click(event => {
     event.preventDefault();
     const content = $("#reply-input").val();
@@ -79,7 +80,7 @@ const createConversationModal = function (data) {
       from_user: 'Me',
       from_user_id: formData.from_user,
       user_id: formData.from_user
-    }))
+    }, true))
   });
 
   return $modal;
