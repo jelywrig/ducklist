@@ -43,7 +43,7 @@ const buildListing = function(listing) {
 
   $listing.find('.btn-primary').click(function(event) {
     event.preventDefault();
-    displayContactModal(listing.owner_id, listing.id, listing.title);
+    displayContactModal(listing.owner_id, listing.id, listing.title, listing.user_id);
   });
 
   $listing.find('form').submit(favoriteHandler)
@@ -60,7 +60,7 @@ const buildListing = function(listing) {
       event.preventDefault()
       if (confirm("Are you sure this item should be deleted?")) {
         const formData = { inactive: true };
-        $.post(`/api/listings/${listing.id}`, formData, renderListings)
+        $.post(`/api/listings/${listing.id}`, formData, renderListings);
       }
     })
   }
