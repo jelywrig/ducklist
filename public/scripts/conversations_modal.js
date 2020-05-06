@@ -16,6 +16,7 @@ const buildConversation = function({ title, sent_at, content, user_id, from_user
 const buildModalBody = function() {
   return new Promise((resolve) => {
     $.get("/api/messages/summaries", data => {
+      console.log(data)
       resolve(data.messages.map(buildConversation))
     })
   })

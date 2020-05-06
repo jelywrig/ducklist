@@ -11,7 +11,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>  <!--for favorite icon-->
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/scripts/helpers.js"></script>
+    <script type="text/javascript" src="/scripts/sockets.js"></script>
     <script type="text/javascript" src="/scripts/contact_modal.js"></script>
     <script type="text/javascript" src="/scripts/conversations_modal.js"></script>
     <script type="text/javascript" src="/scripts/conversation_modal.js"></script>
@@ -148,8 +150,39 @@
       </div>
     </div>
 
+
     <!--- for bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <!-- <script>
+      const socket = io();
+
+      $.get('api/messages/summaries', data => {
+        // console.log(data.messages)
+        const rooms = [];
+        for (const msg of data.messages) {
+          console.log(msg)
+          let room = `${msg.re_item}-${msg.owner_id}`
+          if (msg.owner_id === msg.user_id) {
+            room += `-${msg.other_user}`
+          } else {
+            room += `-${msg.user_id}`
+          }
+          rooms.push(room);
+        }
+        socket.emit('join rooms', { rooms })
+      })
+      // socket.emit('user data', {userId: 3})
+      // let n = 0;
+      // setInterval(() => {
+      //   socket.emit('chat message', `n: ${n++}`);
+      // }, 200);
+
+      // socket.on('chat message', function(msg){
+      //   console.log(msg)
+      // });
+    </script> -->
   </body>
 </html>
