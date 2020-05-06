@@ -21,19 +21,26 @@ module.exports = (db, io) => {
       })
   })
 
+  const getMessagesByItemAndUser = function (item_id, partner_id, my_id){
+    const queryParams = [item_id, partner_id, my_id];
+
+    return db.query(`
+    SELECT u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, u2.id as to_user_id, content, items.id as item_id,
+    sent_at, items.title as item_title, (CASE WHEN from_user = $3 THEN to_user ELSE from_user END) as other_user_id, $3::integer as user_id
+    FROM messages
+    JOIN users u1 on from_user = u1.id
+    JOIN users u2 on to_user = u2.id
+    JOIN items ON re_item = items.id
+    WHERE re_item = $1
+      AND $2 IN (from_user, to_user)
+      AND $3 IN (from_user, to_user)
+    ORDER BY sent_at;
+  `, queryParams);
+
+  }
+
   router.get("/by_item_and_user/:item_id/:user_id", (req, res) => {
-    db.query(`
-      SELECT u1.first_name as from_user, u1.id as from_user_id, u2.first_name as to_user, u2.id as to_user_id, content, items.id as item_id,
-      sent_at, items.title as item_title, (CASE WHEN from_user = $3 THEN to_user ELSE from_user END) as other_user_id, $3::integer as user_id
-      FROM messages
-      JOIN users u1 on from_user = u1.id
-      JOIN users u2 on to_user = u2.id
-      JOIN items ON re_item = items.id
-      WHERE re_item = $1
-        AND $2 IN (from_user, to_user)
-        AND $3 IN (from_user, to_user)
-      ORDER BY sent_at;
-    `, [req.params.item_id, req.params.user_id, req.session.user_id])
+    getMessagesByItemAndUser(req.params.item_id, req.params.user_id, req.session.user_id)
       .then(data => {
         const messages = data.rows
         res.json({ messages })
@@ -48,8 +55,13 @@ module.exports = (db, io) => {
     db.query(`INSERT INTO messages (from_user, to_user, content, re_item) VALUES ($1, $2, $3, $4)`, queryParams)
     .then(data => {
       res.json({succes: true});
-      const msg = JSON.stringify({to_user, content: content + 'from post', item_id });
+      getMessagesByItemAndUser(item_id, to_user, req.session.user_id)
+      .then(data => {
+        console.log(data.rows);
+        const msg = {to_user,from_user: req.session.user_id, content: content + 'from post', item_id, messages: data.rows };
       io.emit('message', msg );
+      })
+
     });
 
   })

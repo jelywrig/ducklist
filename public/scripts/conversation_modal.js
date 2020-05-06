@@ -12,7 +12,7 @@ const displayConversationModal = function (other_user_id, item_id) {
 
 const updateConversationMessages = function ($modal, messages) {
   $messageContainer = $modal.find("#messages-container");
-  //$modal.find('#messages-container')
+  $messageContainer.empty();
   for(message of messages) {
     $messageContainer.append($(`
     <div class="d-flex w-100 justify-content-between">
@@ -69,7 +69,10 @@ const createConversationModal = function (data) {
     const formData = {to_user: other_user, content, item_id};
     const socket = io();
     //socket.emit('message', JSON.stringify(formData));
-    $.post('/api/messages', formData, () => $modal.modal('toggle'));
+    $.post('/api/messages', formData, () => {
+     // $modal.modal('toggle')
+     $("#reply-input").val('');
+    });
   });
 
 

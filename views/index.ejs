@@ -157,10 +157,13 @@
     <script>
       const socket = io();
       socket.on('message', function (msg) {
-        const message = JSON.parse(msg);
-        if(message.to_user == currentUser) {
+        //const message = JSON.parse(msg);
+        if(msg.to_user == currentUser) {
         $('#navbar__messages-button').css('color', 'red');
-
+        //alert(msg.messages);
+        }
+        if(msg.to_user == currentUser || msg.from_user == currentUser) {
+          updateConversationMessages($('#conversationModal'), msg.messages);
         }
       })
     </script>
