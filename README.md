@@ -11,7 +11,7 @@ This project uses:
 * Twilio (to notify offline users that they have a new message)
 * Socket.io (to enable realtime two way private messaging via websockets)
 * bcrypt
-* postgress for database
+* postgres for database
 * ejs
 * express
 * body-parser
@@ -23,7 +23,9 @@ The site is mobile friendly:
 <img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile.png" alt="mobile screenshot" width="150">
 
 Messages are sent realtime:
+
 <img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_convo.png" alt="mobile screenshot" width="150">
 
 Products can be filtered:
+
 <img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_filter.png" alt="mobile screenshot" width="150">
