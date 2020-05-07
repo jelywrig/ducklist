@@ -23,7 +23,6 @@ const conversationNotification = function(data, $conversationModal) {
       user_id: to_user
     }, true));
   } else {
-    console.log('other convo showing');
     $("#back-btn").html('New Message').addClass('msg-alert-btn');  // do something to back btn-
     // and highlight messages?
   }
