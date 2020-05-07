@@ -19,14 +19,11 @@ This project uses:
 
 ## Screenshots
 The site is mobile friendly:
-<div>
-  <div style="float:left">
-   <img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile.png" alt="mobile screenshot" width="150">
-  </div>
-  <div style="float:left">
-    <img src="https://github.com/jelywrig/ducklist/blob/master/docs/  mobile_convo.png" alt="mobile screenshot" width="150">
-  </div>
-  <div style="float:left">
-   <img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_filter.png" alt="mobile screenshot" width="150">
-  </div>
-</div>
+
+<img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile.png" alt="mobile screenshot" width="150">
+
+Messages are sent realtime:
+<img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_convo.png" alt="mobile screenshot" width="150">
+
+Products can be filtered:
+<img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_filter.png" alt="mobile screenshot" width="150">
