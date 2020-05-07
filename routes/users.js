@@ -28,15 +28,19 @@ module.exports = (db) => {
   });
 //todo check if email already registered first
   router.post('/register', (req, res) => {
-    const queryParams = [req.body.firstName, req.body.lastName, req.body.email, req.body.phone, bcrypt.hashSync(req.body.password,10), req.body.is_admin];
+    console.log(req.body);
+    const queryParams = [req.body.firstName, req.body.lastName, req.body.email, req.body.phone,
+      bcrypt.hashSync(req.body.password,10), req.body.is_admin === 'on'? true : false];
 
     db.query(`INSERT INTO users (first_name, last_name, email, phone, password, is_admin) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, queryParams)
       .then(data => {
         req.session.user_id = data.rows[0].id;
         req.session.is_admin = data.rows[0].is_admin;
-        res.redirect('/');
-
-      })
+        res.send({success: true});
+      }).catch(error => {
+          console.log(error);
+          res.status(403).json({message: "A user already exists with that email"});
+        });
 
   })
 

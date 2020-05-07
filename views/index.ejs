@@ -21,6 +21,7 @@
     <script type="text/javascript" src="/scripts/conversation_modal.js"></script>
     <script type="text/javascript" src="/scripts/listings.js"></script>
     <script type="text/javascript" src="/scripts/login.js"></script>
+    <script type="text/javascript" src="/scripts/registration.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="scripts/filter_slidedown.js"></script>
   </head>
@@ -171,9 +172,9 @@
             </button>
           </div>
           <div class="modal-body">
-
+            <div id="registrationError" class="error"></div>
             <!-- Modal Form Content -->
-            <form id="create-user-form">
+            <form id="registration-form">
               <div class="form-group">
                 <label for="firstName-input">First Name</label>
                 <input type="text" name="firstName" class="form-control" id="firstName" aria-describedby="firstName-input" required>
@@ -190,6 +191,10 @@
                 <label for="phone-input">Phone Number</label>
                 <input type="telephone" name="phone" class="form-control" id="phone-input" required>
               </div>
+              <div class="form-group">
+                <label for="reg-password-input">Password</label>
+                <input type="text" name="password" class="form-control" id="reg-password-input" required>
+              </div>
               <div class="form-group row">
                 <div class="col-sm-10">
                   <div class="form-check">
@@ -203,7 +208,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="create-user-form">Create</button>
+            <button type="submit" class="btn btn-primary" form="registration-form">Sign Up</button>
           </div>
         </div>
       </div>
