@@ -42,12 +42,14 @@ app.use(express.static("public"));
 // const usersRoutes = require("./routes/users");
 const listingsRouter = require("./routes/listings");
 const messagesRouter = require("./routes/messages");
+const usersRouter = require("./routes/users");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // app.use("/api", usersRoutes(db));
 app.use("/api/listings", listingsRouter(db));
 app.use("/api/messages", messagesRouter(db));
+app.use("/users", usersRouter(db));
 
 // Note: mount other resources here, using the same pattern above
 const http = require('http').createServer(app);
@@ -64,20 +66,7 @@ app.get("/", (req, res) => {
   res.render("index", templateVars);
 });
 
-app.get('/login/:id', (req, res) => {
-  req.session.user_id = req.params.id;
-  db.query('SELECT is_admin FROM users WHERE id = $1', [req.params.id]).then(function (data) {
-    req.session.is_admin = data.rows[0].is_admin;
-    res.redirect('/');
-  });
 
-});
-
-app.get('/logout', (req,res) => {
-  req.session.user_id = undefined;
-  req.session.is_admin = undefined;
-  res.redirect('/');
-});
 
 
 const sockets = {}
