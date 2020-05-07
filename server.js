@@ -17,6 +17,10 @@ const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
 
+// for twilio
+const smsClient = require('twilio')(process.env.TWILIO_ACCOUNT, process.env.TWILIO_AUTH);
+
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -67,7 +71,21 @@ app.get("/", (req, res) => {
 });
 
 
+const sendSMSNotification = function (user) {
 
+  db.query(`Select phone FROM users WHERE id = $1`, [user])
+  .then(data => {
+    const phoneNumber = data.rows[0].phone;
+    console.log('sending message to ', phoneNumber);
+    smsClient.messages.create({
+      body: 'You have a new Quackslist message',
+      from: '+16043309728',
+      to: phoneNumber
+    }).then(sms => console.log(sms.sid))
+    .catch(error => console.log(error));
+  })
+
+};
 
 const sockets = {}
 io.on('connection', (socket) => {
@@ -92,7 +110,10 @@ io.on('connection', (socket) => {
         sockets[to_user].forEach(sock => {
           io.to(sock.id).emit('private_message', data)
         })
+      } else {
+        sendSMSNotification(to_user);
       }
+
     });
   });
 })
