@@ -20,6 +20,8 @@
     <script type="text/javascript" src="/scripts/conversations_modal.js"></script>
     <script type="text/javascript" src="/scripts/conversation_modal.js"></script>
     <script type="text/javascript" src="/scripts/listings.js"></script>
+    <script type="text/javascript" src="/scripts/login.js"></script>
+    <script type="text/javascript" src="/scripts/registration.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="scripts/filter_slidedown.js"></script>
   </head>
@@ -28,8 +30,10 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="/">Quackslist</a>
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
+        <span class="badge badge-light" id="collapsed-badge"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -44,9 +48,18 @@
           </li>
         <% if(user) { %>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="navbar__messages-button">Messages</a>
+            <a class="nav-link" href="#" id="navbar__messages-button">
+              Messages<span class="badge badge-light"></span>
+            </a>
           </li> <li class="nav-item">
-            <a class="nav-link" href="/logout">Log out</a>
+            <a class="nav-link" href="/users/logout">Log out</a>
+          </li>
+          <% } else { %>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#userSignUpModal">Sign Up</a>
+          </li>
+          <li>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#userLogInModal">Log In</a>
           </li>
           <% } %>
         </ul>
@@ -152,6 +165,91 @@
       </div>
     </div>
 
+    <!--- User Sign Up Modal-->
+    <div class="modal fade" id="userSignUpModal" tabindex="-1" role="dialog" aria-labelledby="userSignUpModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userSignUpModalTitle">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="registrationError" class="error"></div>
+            <!-- Modal Form Content -->
+            <form id="registration-form">
+              <div class="form-group">
+                <label for="firstName-input">First Name</label>
+                <input type="text" name="firstName" class="form-control" id="firstName" aria-describedby="firstName-input" required>
+              </div>
+              <div class="form-group">
+                <label for="lastName-input">Last Name</label>
+                <input type="text" name="lastName" class="form-control" id="lastName-input" aria-describedby="lastName-input" required>
+              </div>
+              <div class="form-group">
+                <label for="email-input">Email</label>
+                <input type="email" name="email" class="form-control" id="email-input" required>
+              </div>
+              <div class="form-group">
+                <label for="phone-input">Phone Number</label>
+                <input type="telephone" name="phone" class="form-control" id="phone-input" required>
+              </div>
+              <div class="form-group">
+                <label for="reg-password-input">Password</label>
+                <input type="text" name="password" class="form-control" id="reg-password-input" required>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <label for="is_admin" class="form-check-label">
+                    <input type="checkbox" name="is_admin" class="form-check-input" id="is_admin-input"> Do you wish to create postings? </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="registration-form">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Log in Modal-->
+    <div class="modal fade" id="userLogInModal" tabindex="-1" role="dialog" aria-labelledby="userLoginModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userLogInModalTitle">Log In</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="loginError" class="error"></div>
+            <!-- Modal Form Content -->
+            <form id="login-form">
+              <div class="form-group">
+                <label for="email-input">Email</label>
+                <input type="email" name="email" class="form-control" id="login-email-input" required>
+              </div>
+              <div class="form-group">
+                <label for="password-input">Password</label>
+                <input type="password" name="password" class="form-control" id="password-input" aria-describedby="lastName-input" required>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="login-form">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--- for bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

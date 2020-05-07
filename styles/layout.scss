@@ -14,6 +14,12 @@ body {
   flex-wrap: wrap;
 }
 
+#conversations-modal-container {
+  .new-msg p {
+    font-weight: bold;
+  }
+}
+
 #filter_slidedown {
   display: none;
 
@@ -50,4 +56,15 @@ span.sold {
 div.new-msg {
   animation-name: fadeIn;
   animation-duration: 2s;
+}
+
+
+.error {
+  color: red;
+  border: 3px solid red;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  display: none;
+
 }
