@@ -20,7 +20,8 @@ This project uses:
 ## Screenshots
 The site is mobile friendly:
 
-![mobile screenshot](https://github.com/jelywrig/ducklist/blob/master/docs/mobile.png | width=150)
-
 <img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile.png" alt="mobile screenshot" width="150">
- 
+
+<img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_convo.png" alt="mobile screenshot" width="150">
+
+<img src="https://github.com/jelywrig/ducklist/blob/master/docs/mobile_filter.png" alt="mobile screenshot" width="150">
