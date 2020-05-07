@@ -7,18 +7,21 @@ module.exports = (db) => {
 
   router.post('/login', (req, res) => {
     const email = req.body.email;
+    console.log(req.body);
     console.log(email);
     db.query(`SELECT id, is_admin, password FROM users WHERE email = $1`, [email])
       .then( data => {
+        console.log(data.rows[0]);
         if (!data.rows[0]) {
           res.status(403).json({message: 'No account associated with this email'});
         } else if(!bcrypt.compareSync(req.body.password, data.rows[0].password)) {
 
           res.status(403).json({message: 'Incorrect Password'});
         } else {
+          console.log('success');
           req.session.user_id = data.rows[0].id;
           req.session.is_admin = data.rows[0].is_admin;
-          res.redirect('/');
+          res.send({success: 'true'});
         }
 
       })
