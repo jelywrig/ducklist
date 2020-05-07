@@ -49,13 +49,38 @@ span.sold {
   background-color: transparent;
 }
 
-@keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+@keyframes fadeInFromLeft {
+  from {
+    position: relative;
+    opacity: 0;
+    left: -10rem;
+  }
+  to {
+    position: relative;
+    left: 0;
+    opacity: 1;
+  }
 }
+@keyframes fadeInFromRight {
+  from {
+    position: relative;
+    opacity: 0;
+    right: -10rem;
+  }
+  to {
+    position: relative;
+    right: 0;
+    opacity: 1;
+  }
+}
+
 div.new-msg {
-  animation-name: fadeIn;
-  animation-duration: 1s;
+  animation-name: fadeInFromLeft;
+  animation-duration: 0.5s;
+}
+
+div.new-msg.right {
+  animation-name: fadeInFromRight;
 }
 
 
