@@ -1,12 +1,12 @@
 
-const buildConversation = function({ title, sent_at, content, user_id, from_user, from_user_id, to_user, re_item , other_user}) {
+const buildConversation = function({ id, title, sent_at, content, user_id, from_user, from_user_id, to_user, re_item , other_user}) {
   const $conversation = $(`
-    <a href="#" class="list-group-item list-group-item-action" data-re_item="${re_item}" data-other_user="${other_user}">
+    <a href="#" class="list-group-item list-group-item-action" data-id="${id}" data-re_item="${re_item}" data-other_user="${other_user}">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">Re: ${escape(title)}</h5>
         <small>${displayDate(sent_at)}</small>
       </div>
-      <p class="mb-1" style="font-weight: bold;">${escape(content)}</p>
+      <p class="mb-1">${escape(content)}</p>
       <small>${user_id === from_user_id ? `To: ${to_user}`: `From: ${from_user}`}</small>
     </a>
   `);
@@ -49,7 +49,7 @@ const buildModal = function() {
 const openConversationsModal = function(event) {
   event.preventDefault();
   $('#navbar__messages-button').find('.badge').empty()
-  buildModalBody()
+  return buildModalBody()
     .then(conversations => {
       const $modal = buildModal();
       $modalBody = $modal.find('.modal-body');
@@ -60,5 +60,6 @@ const openConversationsModal = function(event) {
         $modal.modal("toggle");
       })
       $('#conversations-modal-container').html($modal);
+      return $modal
     })
 }
