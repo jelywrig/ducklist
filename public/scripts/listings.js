@@ -28,16 +28,18 @@ const buildListing = function(listing) {
           <h5 class="card-title">${escape(listing.title)}</h5> ${getPrice(listing)}
         </div>
         <p class="card-text">${escape(listing.description)}</p>
-        <div>
-          ${buildListingButtons(listing)}
-          <span class="align-middle float-right">
+        ${listing.user_id ? `
+          <div>
+            ${buildListingButtons(listing)}
+            <span class="align-middle float-right">
 
-            <form data-listing_id="${listing.id}" data-is_favorite="${listing.favourite}">
-              <input class="material-icons" type="submit" value="${listing.favourite ? 'favorite' : 'favorite_border'}" style="border: none; background-color: transparent;">
-            </form>
+              <form data-listing_id="${listing.id}" data-is_favorite="${listing.favourite}">
+                <input class="material-icons" type="submit" value="${listing.favourite ? 'favorite' : 'favorite_border'}" style="border: none; background-color: transparent;">
+              </form>
 
-          </span>
-        </div>
+            </span>
+          </div>
+        ` : ""}
       </div>
     </div>
   `);
