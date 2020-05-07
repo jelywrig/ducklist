@@ -65,9 +65,23 @@ const createConversationModal = function (data) {
   `);
   const $messagesContainer = $modal.find('#messages-container');
 
-  $modal.find('#back-btn').click(event => {
+  $modal.find('#back-btn').click(function(event) {
     event.preventDefault();
-    openConversationsModal(event);
+    const currentIds = []
+    $('#conversationsModal').find('.modal-body .list-group-item').each((_, elem) => {
+      currentIds.push($(elem).data('id'))
+    })
+    openConversationsModal(event)
+      .then($modal => {
+        if ($(this).hasClass('msg-alert-btn')) {
+          $modal.find('.modal-body .list-group-item').each((_, elem) => {
+            $elem = $(elem);
+            if (!currentIds.includes($elem.data('id'))) {
+              $elem.addClass('new-msg')
+            }
+          })
+        }
+      });
     $modal.modal('toggle');
   });
 

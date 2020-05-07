@@ -30,7 +30,26 @@ const conversationNotification = function(data, $conversationModal) {
 }
 
 const conversationsNotification = function(data, $conversationsModal) {
+  const $modalBody = $conversationsModal.find('.modal-body');
+  buildModalBody()
+    .then(conversations => {
+      $modalBody.empty()
 
+      for (const $convo of conversations) {
+        const item_id = $convo.data('re_item')
+        const other_user = $convo.data('other_user')
+        if (data.item_id === item_id && data.from_user === other_user) {
+          $convo.addClass('new-msg')
+        }
+        $modalBody.append($convo)
+      }
+
+      $modalBody.find('a').click(function(event) {
+        event.preventDefault();
+        displayConversationModal(this.dataset.other_user, this.dataset.re_item);
+        $conversationsModal.modal("toggle");
+      })
+  })
 }
 
 const generalNotification = function(data) {
