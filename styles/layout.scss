@@ -51,3 +51,14 @@ div.new-msg {
   animation-name: fadeIn;
   animation-duration: 2s;
 }
+
+
+.error {
+  color: red;
+  border: 3px solid red;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  display: none;
+
+}

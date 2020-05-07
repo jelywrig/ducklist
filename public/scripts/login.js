@@ -1,14 +1,14 @@
 $(document).ready(function() {
   $('#login-form').submit(function(event) {
     event.preventDefault();
-    console.log('prevented default on login form');
+    $('#loginError').slideUp(80);
     $.post('/users/login', $(this).serialize())
       .then((data) => {
-       location.reload();
+        location.reload();
       })
       .catch(error => {
-        console.log('error on post login', error);
-        console.log(error.responseJSON.message);
+        $('#loginError').html(error.responseJSON.message).slideDown(300);
+
       })
   });
 
