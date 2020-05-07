@@ -17,6 +17,7 @@ const buildListingButtons = function({ owner_id, user_id, sold_at }) {
 }
 
 const buildListing = function(listing) {
+  console.log(listing)
   const $listing = $(`
     <div class="card mt-4" style="width: 20rem;">
       <div style="height: 20rem;">

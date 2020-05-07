@@ -36,12 +36,10 @@ const conversationsNotification = function(data, $conversationsModal) {
       $modalBody.empty()
 
       for (const $convo of conversations) {
-        const item_id = $convo.data('re_item')
-        const other_user = $convo.data('other_user')
-        if (data.item_id === item_id && data.from_user === other_user) {
-          $convo.addClass('new-msg')
+        if ($convo.data('id') > $modalBody.data('max_id')) {
+          $convo.addClass('new-msg');
         }
-        $modalBody.append($convo)
+        $modalBody.append($convo);
       }
 
       $modalBody.find('a').click(function(event) {

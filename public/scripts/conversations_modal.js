@@ -21,7 +21,7 @@ const buildModalBody = function() {
   })
 }
 
-const buildModal = function() {
+const buildModal = function(maxId) {
   const $modal = $(`
     <div class="modal fade" id="conversationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
@@ -32,7 +32,7 @@ const buildModal = function() {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body list-group">
+          <div class="modal-body list-group" data-max_id="${maxId}">
 
           </div>
           <div class="modal-footer">
@@ -51,7 +51,12 @@ const openConversationsModal = function(event) {
   $('#navbar__messages-button').find('.badge').empty()
   return buildModalBody()
     .then(conversations => {
-      const $modal = buildModal();
+      let maxId = 0;
+      conversations.forEach((elem) => {
+        const elemId = elem.data('id');
+        maxId = elemId > maxId ? elemId : maxId
+      })
+      const $modal = buildModal(maxId);
       $modalBody = $modal.find('.modal-body');
       $modalBody.append(...conversations)
       $modalBody.find('a').click(function(event) {
