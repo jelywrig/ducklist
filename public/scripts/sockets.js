@@ -51,8 +51,10 @@ const conversationsNotification = function(data, $conversationsModal) {
 }
 
 const generalNotification = function(data) {
-  const $messagesButton = $('#navbar__messages-button')
-  $messagesButton.find('.badge').html('NEW')
+  const $messagesButton = $('#navbar__messages-button');
+  $messagesButton.find('.badge').html('NEW');
+  const $collapsedBadge = $('#collapsed-badge');
+  $collapsedBadge.html('NEW')
 }
 
 socket.on('private_message', data => {

@@ -49,6 +49,7 @@ const buildModal = function(maxId) {
 const openConversationsModal = function(event) {
   event.preventDefault();
   $('#navbar__messages-button').find('.badge').empty()
+  $('#collapsed-badge').empty()
   return buildModalBody()
     .then(conversations => {
       let maxId = 0;
