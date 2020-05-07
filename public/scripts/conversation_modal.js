@@ -14,12 +14,30 @@ const displayConversationModal = function (other_user_id, item_id) {
 }
 
 const createMessage = function(message, socket = false) {
-  return `
-    <div class="d-flex w-100 justify-content-between ${socket ? 'new-msg' : ''}">
-      <h5>${escape(message.from_user_id == message.user_id ? 'Me' : message.from_user)} </h5>
-      <p class="ml-3" >${escape(message.content)}</p>
-    </div>
-  `
+  if (message.from_user_id == message.user_id) {
+    return `
+      <div class="msg-container right ${socket ? 'new-msg' : ''}">
+        <div class="alert alert-primary" role="alert">
+          ${escape(message.content)}
+        </div>
+      </div>
+      `;
+  } else {
+    return `
+      <div class="msg-container ${socket ? 'new-msg' : ''}">
+        <div class="alert alert-secondary" role="alert">
+          <h6 class="alert-heading">${escape(message.from_user)}:</h6>
+          ${escape(message.content)}
+        </div>
+      </div>
+    `;
+  }
+  // return `
+  //   <div class="d-flex w-100 justify-content-between ${socket ? 'new-msg' : ''}">
+  //     <h5>${escape(message.from_user_id == message.user_id ? 'Me' : message.from_user)} </h5>
+  //     <p class="ml-3" >${escape(message.content)}</p>
+  //   </div>
+  // `
 }
 
 const createConversationModal = function (data) {
@@ -43,7 +61,8 @@ const createConversationModal = function (data) {
       </div>
       <div class="modal-body">
 
-      <div id="messages-container"></div>
+        <div id="messages-container"></div>
+
         <!-- Modal Form Content -->
         <form id="reply-message-form">
 

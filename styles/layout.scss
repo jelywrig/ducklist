@@ -68,3 +68,24 @@ div.new-msg {
   display: none;
 
 }
+
+#messages-container {
+  .msg-container {
+    display: flex;
+    &.right {
+      justify-content: flex-end;
+    }
+
+    .alert-heading {
+      font-size: 0.75rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .alert {
+    width: fit-content;
+    margin-bottom: 0.33rem;
+    padding: .5rem 1rem;
+    border-radius: 0.5rem;
+  }
+}
