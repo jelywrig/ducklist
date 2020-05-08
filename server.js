@@ -102,11 +102,14 @@ io.on('connection', (socket) => {
       sockets[user_id] = sockets[user_id].filter(sock => {
         return sock.id !== socket.id;
       })
+      if (sockets[user_id].length === 0) {
+        delete sockets[user_id];
+      }
     })
 
     socket.on('private_message', (data) => {
       const {to_user} = data;
-      if (sockets[to_user]) {
+      if (sockets[to_user] && sockets[to_user].length > 0) {
         sockets[to_user].forEach(sock => {
           io.to(sock.id).emit('private_message', data)
         })
