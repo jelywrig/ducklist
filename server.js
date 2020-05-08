@@ -78,7 +78,7 @@ const sendSMSNotification = function (user) {
     const phoneNumber = data.rows[0].phone;
     console.log('sending message to ', phoneNumber);
     smsClient.messages.create({
-      body: 'You have a new Quackslist message',
+      body: 'You have a new Quackslist message https://quackslist.herokuapp.com/',
       from: '+16043309728',
       to: phoneNumber
     }).then(sms => console.log(sms.sid))
